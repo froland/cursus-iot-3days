@@ -1,0 +1,755 @@
+% !TeX spellcheck = fr_FR
+\documentclass[aspectratio=169,utf8,french]{beamer}
+
+\usepackage{color}
+\usepackage{listings}
+\usepackage{url}
+\usepackage{tikz}
+\usepackage[siunitx]{circuitikz}
+\usepackage{siunitx}
+\usepackage[french]{babel}
+
+\usetheme{Frankfurt}
+\usecolortheme{rose}
+\usefonttheme{structurebold}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.47,0.47,0.33}
+\definecolor{myorange}{rgb}{0.8,0.4,0}
+\definecolor{mywhite}{rgb}{0.98,0.98,0.98}
+\definecolor{myblue}{rgb}{0.01,0.61,0.98}
+
+\lstset{%
+  language=c++,
+  numbers=left,
+  numbersep=1em,
+  backgroundcolor=\color{mywhite},
+  numberstyle=\tiny\color{mygray},
+  basicstyle=\footnotesize\ttfamily,
+  stringstyle=\color{red},
+  commentstyle=\color{mygray},
+  deletekeywords={...},
+  escapeinside={\%*}{*)},
+  extendedchars=true,
+  keywordstyle=\color{myorange},
+  morekeywords={*,...},
+  rulecolor=\color{black},
+  rulesepcolor=\color{myblue},
+  stringstyle=\color{myorange},
+  tabsize=2
+}
+
+\title{Objets connectés}
+\author{François Roland}
+\date{2 novembre 2018}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Introduction}
+
+\begin{frame}
+  \frametitle{Partage d'informations}
+  \begin{center}
+    \url{http://bit.ly/iot3d}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Plan}
+  \tableofcontents
+\end{frame}
+
+\begin{frame}
+  \frametitle{Règles de conduite}
+  Horaire
+  \begin{itemize}
+    \item 8:30 -- 12:30 (pause vers 10:30)
+    \item 13:30 -- 17:30 (pause vers 15:30)
+  \end{itemize}
+  Prise de parole
+  \begin{itemize}
+    \item Questions et commentaires bienvenus 
+    \item Parler suffisamment fort pour l'ensemble du groupe
+    \item Ne pas monopoliser la parole
+    \item Ne pas interrompre
+  \end{itemize}
+  Respect de chacun
+  \begin{itemize}
+    \item Commentaires discriminatoires non tolérés
+    \item Ne pas perturber le cours (gsm, réseaux sociaux)
+  \end{itemize}
+\end{frame}
+
+\subsection{Présentations}
+
+\begin{frame}{François Roland}
+  \begin{columns}
+    \begin{column}{.3\textwidth}
+      \begin{flushright}
+        \includegraphics[height=.8\textheight]{pictures/francois1.png}
+      \end{flushright}
+    \end{column}
+    \begin{column}{.7\textwidth}
+      \begin{itemize}
+        \item Ingénieur Civil en Informatique et Gestion
+        \item Aujourd'hui
+          \begin{itemize}
+            \item Chercheur Télécoms UMONS
+            \item Chargé de projet Fab-IoT-Lab au FabLab Mons
+            \item Indépendant complémentaire
+          \end{itemize}
+        \item Dans le passé
+          \begin{itemize}
+            \item Consultant en développement logiciel
+            \item Take-Eat-Easy (startup)
+          \end{itemize}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Mes centres d'intérêt professionnels}
+  \begin{columns}
+    \begin{column}{.3\textwidth}
+      \begin{flushright}
+        \includegraphics[height=.8\textheight]{pictures/francois2.png}
+      \end{flushright}
+    \end{column}
+    \begin{column}{.7\textwidth}
+      \begin{itemize}
+        \item Électronique
+        \item Programmation
+        \item Conception mécanique
+        \item Enseignement
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Et vous~?}
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+      \begin{itemize}
+        \item Prénom
+        \item Attentes
+        \item Compétences IoT
+          \begin{itemize}
+            \item Programmation
+            \item Électronique
+            \item Télécommunications
+          \end{itemize}
+        \item Projets personnels IoT
+      \end{itemize}
+    \end{column}
+    \begin{column}{.6\textwidth}
+      \begin{flushright}
+        \includegraphics[width=.9\linewidth]{pictures/etvous.jpg}
+      \end{flushright}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{Définitions}
+
+\begin{frame}
+  \frametitle{Qu’est-ce que l’Internet des Objets~?}
+  \begin{quotation}
+    <<~L'Internet des objets, ou IdO (en anglais Internet of Things, ou IoT), est l'extension d'Internet à des choses et à des lieux du monde physique.
+      
+    Alors qu'Internet ne se prolonge habituellement pas au-delà du monde électronique, l'Internet des objets connectés représente les échanges d'informations et de données provenant de dispositifs du monde réel avec le réseau Internet.~>>
+  \end{quotation}
+
+  \hfill{\scriptsize\url{https://fr.wikipedia.org/wiki/Internet_des_objets}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Qu'est-ce qu'un objet connecté ?}
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+      \includegraphics[width=\textwidth]{pictures/objetsconnectes.jpg}
+    \end{column}
+    \begin{column}{.6\textwidth}
+      Un objet connecté est constitué de :
+      \begin{itemize}
+        \item Un capteur ou actionneur pour interagir avec son environnement
+        \item Un micro-contrôleur pour transformer les données
+        \item Un moyen de communication pour communiquer avec le monde
+        \item Une source d’énergie pour alimenter les éléments précédents
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{Historique}
+
+\begin{frame}
+  \frametitle{Histoire de l'IoT}
+  \begin{columns}
+    \begin{column}{.3\textwidth}
+      \includegraphics[width=\textwidth]{pictures/kevinashton.jpg}
+    \end{column}
+    \begin{column}{.7\textwidth}
+      L’histoire des objets connectés débute en \emph{1999} lorsque Kevin Ashton, pionnier de la technologie \emph{RFID} (Radio Frequency IDentification – Technologie d’identification automatique), invente l’expression <<~\emph{Internet des Objets}~>>.
+
+      Cette même année, le concept naît aux États-Unis et particulièrement au \emph{MIT} (Massachusetts Institute of Technology).
+      Ce laboratoire est dédié à la création d’objets connectés à l’aide de l’identification par radiofréquence et les réseaux de capteurs sans fil.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Histoire de l'IoT}
+  \begin{columns}
+    \begin{column}{.3\textwidth}
+      \includegraphics[width=\textwidth]{pictures/nabaztag.jpg}
+    \end{column}
+    \begin{column}{.7\textwidth}
+      En \emph{2003}, Rafi Haladjian, inventeur du premier opérateur Internet en France (Francenet), créé la \emph{lampe DAL}. Une lampe d’ambiance équipée de 9 LEDs, proposant différentes couleurs et commercialisée à \emph{790 euros}.
+
+      Deux ans plus tard, l’entreprise du créateur lance le \emph{Nabaztag}, un lapin connecté en WiFi qui lit les mails à haute voix, émets des signaux visuels et diffuse de la musique.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Histoire de l'IoT}
+  \begin{columns}
+    \begin{column}{.3\textwidth}
+      \includegraphics[width=\textwidth]{pictures/smartphone.jpg}
+    \end{column}
+    \begin{column}{.7\textwidth}
+      C’est néanmoins en \emph{2007} que le phénomène de l'IoT a pris de l’ampleur, avec la démocratisation des \emph{smartphones} et la sortie du premier iPhone par Apple.
+      La dématérialisation est en marche.
+
+      Nous vivons actuellement une rupture forte.
+      Celle nous permettant de connecter Internet au moindre objet de notre quotidien.
+      Ces objets génèrent une quantité de données telle que ses perspectives d’exploitation semblent sans limite.
+
+      Le sujet des data suscite des questions éthiques délicates sur le respect de la vie privée.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{Arduino, capteurs et actionneurs}
+
+\begin{frame}
+  \tableofcontents[currentsection]
+\end{frame}
+
+\subsection{Micro-contrôleur}
+
+\begin{frame}
+  \frametitle{Arduino}
+  \begin{center}
+    \includegraphics[height=.8\textheight]{pictures/arduino.jpg}
+  \end{center}
+\end{frame}
+
+\subsection{Programmation}
+
+\begin{frame}[fragile]
+  \frametitle{Programmation C pour Arduino}
+  \begin{lstlisting}
+Code == texte;
+Exécution ligne par ligne;
+// Commentaire
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Variable}
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+      \begin{lstlisting}
+int pin = 13;
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.6\textwidth}
+      \begin{itemize}
+        \item Un type
+        \begin{itemize}
+          \item \lstinline{int}
+          \item \lstinline{float}
+          \item \lstinline{char[]}
+        \end{itemize}
+        \item Un nom
+        \item Une valeur de départ (\emph{optionnel})
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Fonction}
+  \begin{columns}
+    \begin{column}{.6\textwidth}
+      \begin{lstlisting}
+int myMultiplyFunction(int x, int y) {
+  return x * y;
+}
+
+void loop() {
+  int k = myMultiplyFunction(2, 3);
+
+  Serial.println(k); // 6
+}
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.4\textwidth}
+      \begin{itemize}
+        \item Un nom
+        \item Des paramètres (\emph{optionnel})
+        \item Un type de retour
+        \item Un code d’implémentation
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Fonctions spéciales}
+  \begin{lstlisting}
+void setup() {
+  ...
+}
+  \end{lstlisting}
+  est exécuté une seule fois au démarrage.
+
+  \begin{lstlisting}[firstnumber=4]
+void loop() {
+  ...
+}
+  \end{lstlisting}
+  est exécuté en boucle après \lstinline|setup()|.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Condition}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{lstlisting}
+  if (x > 120) {
+    digitalWrite(LEDpin1, HIGH);
+    digitalWrite(LEDpin2, HIGH);
+  }
+  
+  if (y == 150) {
+    digitalWrite(LEDpin4, LOW);
+  } else {
+    digitalWrite(LEDpin4, HIGH);
+  }
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \begin{itemize}
+        \item Une condition à tester
+        \item Un bout de code à exécuter si la condition est vérifiée
+        \item Un bout de code à exécuter si la condition n’est pas vérifiée (\emph{optionnel})
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Boucle for}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{lstlisting}
+for (int i=0; i <= 255; i++) {
+  analogWrite(PWMpin, i);
+  delay(10);
+}
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      À utiliser quand on sait combien de fois il faut répéter la boucle.
+      \begin{itemize}
+        \item Un compteur
+        \item Un bout de code à répéter
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Boucle while}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{lstlisting}
+int value = 0;
+while(value < 10) {
+  digitalWrite(LEDpin3, HIGH);
+  delay(200);
+  digitalWrite(LEDpin3, LOW);
+  value = analogRead(TRIMpin);
+}
+      \end{lstlisting}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      À utiliser lorsque l’on veut répéter une boucle tant qu’une condition est vérifiée
+      \begin{itemize}
+        \item Une condition à vérifier
+        \item Un code à répéter
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{Exercices pratiques}
+
+\begin{frame}
+  \frametitle{Découvrons les kits}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Installation de l'IDE Arduino}
+  \begin{center}
+    \includegraphics[height=.8\textheight]{pictures/arduino.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{LED interne}
+  \begin{columns}
+    \begin{column}{.5\linewidth}
+      \includegraphics[width=\linewidth]{pictures/UNO-integratedLED_bb.png}
+    \end{column}
+    \pause
+    \begin{column}{.5\linewidth}
+      \begin{lstlisting}
+void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(500);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(500);
+}
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Moniteur série}
+  \begin{columns}
+    \begin{column}{.5\linewidth}
+      \includegraphics[width=\linewidth]{pictures/UNO_bb.png}
+    \end{column}
+    \pause
+    \begin{column}{.5\linewidth}
+      \begin{lstlisting}
+int i = 0;
+
+void setup() {
+  Serial.begin(115200);
+  Serial.println("setup DONE");
+}
+
+void loop() {
+  Serial.print("Loop #");
+  Serial.println(i);
+  i++;
+  delay(1000);
+}
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}<1>[fragile,label=extled]
+  \frametitle{LED externe}
+  \begin{columns}
+    \begin{column}{.5\linewidth}
+      \includegraphics[height=.8\textheight]{pictures/UNO-LED_bb.png}
+    \end{column}
+    \pause
+    \begin{column}{.5\linewidth}
+      \begin{lstlisting}
+void setup() {
+  pinMode(8, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(8, HIGH);
+  delay(500);
+  digitalWrite(8, LOW);
+  delay(500);
+}
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Lois électriques}
+  \begin{columns}[t]
+    \begin{column}{.5\linewidth}
+      Loi d'Ohm
+      \[ U = R \cdot I \]
+      \[ I = \frac{U}{R} \]
+      \[ R = \frac{U}{I} \]
+    \end{column}
+    \begin{column}{.5\linewidth}
+      Puissance électrique
+      \begin{equation}
+        P = U \cdot I
+      \end{equation}
+      \begin{equation}
+        P = R \cdot I^2
+      \end{equation}
+      \begin{equation}
+        P = R \cdot I^2
+      \end{equation}
+    \end{column}
+  \end{columns}
+  \vspace{1em}
+  où $ U $ est la tension, $ I $ le courant, $ R $ la résistance et $ P $ la puissance.
+\end{frame}
+
+\begin{frame}{Résistance de limitation du courant}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{circuitikz} \draw
+        (0,0) to[V=5<\volt>] (0,4)
+        to[led, v=$U_{LED}$, f=$I_{LED}$] (4,4)
+        to[R=$R$, v<=$U_R$] (4,0) -- (0,0);
+      \end{circuitikz}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      Pour une LED rouge,
+      \[ U_{LED} = \SI{1.7}{\volt} \quad \text{et} \quad I_{LED} = \SI{10}{\milli\ampere} \]
+      donc la tension aux bornes de la résistance vaut
+      \[ U_R = \SI{5}{\volt} - \SI{1.7}{\volt} = \SI{3.3}{\volt} \]
+      et sa valeur
+      \[ R = \frac{U_R}{I} = \frac{\SI{3.3}{\volt}}{\SI{10}{\milli\ampere}} = \SI{330}{\ohm} \]
+       par application de la loi d'Ohm.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Valeurs standards LED}
+  \begin{center}
+    Les valeurs caractéristiques d'une LED dépendent de sa couleur.
+    \vspace{1em} \\
+    \begin{tabular}{|l|c|c|}
+      \hline 
+      \emph{couleur} & \emph{chute de tension} & \emph{courant maximal} \\ 
+      \hline 
+      rouge & $\SI{1.7}{\volt}$ & $\SI{10}{\milli\ampere}$ \\ 
+      jaune & $\SI{2.1}{\volt}$ & $\SI{10}{\milli\ampere}$ \\ 
+      verte & $\SI{2.2}{\volt}$ & $\SI{10}{\milli\ampere}$ \\ 
+      bleue & $\SI{3.2}{\volt}$ & $\SI{20}{\milli\ampere}$ \\ 
+      blanche & $\SI{3.6}{\volt}$ & $\SI{20}{\milli\ampere}$ \\ 
+      \hline 
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\againframe<2>{extled}
+
+\begin{frame}<1>[fragile,label=push]
+  \frametitle{Bouton poussoir}
+  \begin{columns}
+    \begin{column}{.5\linewidth}
+      \includegraphics[height=.8\textheight]{pictures/UNO-push_bb.png}
+    \end{column}
+    \pause
+    \begin{column}{.5\linewidth}
+      \begin{lstlisting}
+void setup() {
+  Serial.begin(115200);
+  pinMode(7, INPUT);
+}
+
+void loop() {
+  if (digitalRead(7) == LOW) {
+    Serial.println("button pushed");
+  }
+  delay(200);
+}
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\againframe<2>{push}
+
+\begin{frame}{Résistance de tirage}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      Résistance pullup \\
+      \begin{center}
+        \begin{circuitikz}
+          \draw (0,0) node[anchor=east] {}
+            to[short, o-*] (2,0)
+            to[push button] (2,-2) node[rground] {};
+          \draw (2,2) node[vcc] {$+\SI{5}{\volt}$}
+            to[R=$\SI{10}{\kilo\ohm}$] (2,0);
+        \end{circuitikz}
+      \end{center}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      Résistance pulldown \\
+      \begin{center}
+        \begin{circuitikz}
+          \draw (0,0) node[anchor=east] {}
+            to[short, o-*] (2,0)
+            to[push button, mirror] (2,2) node[vcc] {$+\SI{5}{\volt}$};
+          \draw (2,-2) node[rground] {}
+            to[R, a=$\SI{10}{\kilo\ohm}$] (2,0);
+        \end{circuitikz}
+      \end{center}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Bouton poussoir avec pullup interne}
+\begin{columns}
+  \begin{column}{.5\linewidth}
+    \includegraphics[height=.8\textheight]{pictures/UNO-push-pullup_bb.png}
+  \end{column}
+  \begin{column}{.5\linewidth}
+    \begin{lstlisting}
+void setup() {
+  Serial.begin(115200);
+  pinMode(7, INPUT_PULLUP);
+}
+
+void loop() {
+  if (digitalRead(7) == LOW) {
+    Serial.println("button pushed");
+  }
+  delay(200);
+}
+    \end{lstlisting}
+  \end{column}
+\end{columns}
+\end{frame}
+
+\section{Télécommunications}
+
+\begin{frame}
+  \tableofcontents[currentsection]
+\end{frame}
+
+\subsection{Communications sans fil}
+
+\begin{frame}
+  \frametitle{Communication point-à-point}
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \includegraphics[width=\textwidth]{pictures/UNO-nRF24L01_bb.png}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      {\small \url{http://tmrh20.github.io/RF24/}}
+      \begin{alertblock}{$\SI{3.3}{\volt}$}
+        Ce module ne supporte pas une tension de plus de $\SI{3.3}{\volt}$
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Communication WiFi}
+  \begin{center}
+    \includegraphics[height=.7\textheight]{pictures/esp8266-station.png}
+    \footnotesize\url{https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/readme.html}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{WiFi}
+  \begin{columns}[t]
+    \begin{column}{0.5\textwidth}
+      Avantages
+      \begin{itemize}
+        \item Vitesse de transfert $ ++ $
+        \item Portée $ + $
+        \item Coût des transmetteurs $ - $
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      Inconvénients
+      \begin{itemize}
+        \item Consommation d'énergie $ ++ $
+        \item Facilité de configuration $ - $
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Protocole Internet (IP)}
+  \includegraphics[width=\linewidth]{pictures/routing.png}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Adresse IP}
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      Adresse statique
+      \begin{itemize}
+        \item Adresse~: 192.168.243.11
+        \item Passerelle~: 192.168.243.1
+        \item Masque de sous-réseau~: 255.255.255.0
+      \end{itemize}
+      Adresse dynamique (DHCP)
+      \begin{itemize}
+        \item Attribution automatique
+        \item Configuration réseau
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \includegraphics[width=\linewidth]{pictures/postbox.jpg}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{Outils de développement IoT}
+
+\begin{frame}
+  \frametitle{MQTT}
+  \begin{center}
+    \includegraphics[width=.8\linewidth]{pictures/mqtt.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Node-RED}
+  \begin{center}
+    \includegraphics[height=.8\textheight]{pictures/nodered.png}
+  \end{center}
+\end{frame}
+
+
+\section{Conclusion}
+
+\begin{frame}
+  \frametitle{Ce que nous avons vu}
+  \begin{itemize}
+    \item Programmation Arduino
+    \item Capteurs et actionneurs
+    \item Multimètre et console série
+    \item Communication sans fil
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Ce que nous n’avons pas abordé}
+  \begin{itemize}
+    \item Sécurité
+    \item Mise à jour
+    \item Gestion d'énergie
+    \item Communication sans fil basse consommation
+    \item Packaging (chaleur, vibration)
+  \end{itemize}
+\end{frame}
+
+\end{document}
