@@ -2,6 +2,8 @@
 
 ## Fournisseurs européens
 
+### Électronique
+
 * https://be.farnell.com
 * https://befr.rs-online.com/web/
 * https://www.mouser.be
@@ -11,7 +13,19 @@
 * https://www.amazon.fr
 * https://www.ebay.be
 * https://electrotheque.be ou rue Hamoir 113, 7100 La Louvière
+* https://www.gotron.be/gotron-aalst ou Gotron Aalst, Leo de Béthunelaan 101, Aalst
+* https://shop.mchobby.be ou MC Hobby sprl, Clos de la Giberne 3, 1410 Waterloo
+* http://www.stappenmotor.nl ou StappenMotor, Veenhuizerveld weg 21 Putten, (gelderland), 3881 RE Putten, HOLLAND
+* https://www.antratek.com ou Antratek Belgium, Cipalstraat 3, 2440 Geel
 
+### Outillage
+
+* http://www.rc-machines.com ou RC-Machines, rue Emile Nilles Gewerbegebiet 2, L-6131 Junglinster, LUXEMBOURG
+* http://www.buitelaar.nl ou HBM Machines B.V., Grote Esch 1010, 2841MJ Moordrecht, THE NETHERLANDS
+
+### Composants CNC
+
+* https://www.damencnc.com ou DamenCNC, Louis Pasteurweg 17, 2408 AH Alphen aan den Rijn, THE NETHERLANDS
 ## Fournisseurs chinois
 
 * https://www.aliexpress.com/
