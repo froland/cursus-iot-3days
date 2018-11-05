@@ -21,7 +21,7 @@
 ### Outillage
 
 * http://www.rc-machines.com ou RC-Machines, rue Emile Nilles Gewerbegebiet 2, L-6131 Junglinster, LUXEMBOURG
-* http://www.buitelaar.nl ou HBM Machines B.V., Grote Esch 1010, 2841MJ Moordrecht, THE NETHERLANDS
+* https://www.hbm-machines.com HBM Machines B.V., Grote Esch 1010, 2841MJ Moordrecht, THE NETHERLANDS
 
 ### Composants CNC
 
